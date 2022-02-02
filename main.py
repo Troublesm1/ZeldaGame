@@ -1,13 +1,13 @@
 import pygame, sys
 from settings import *
-from level import Level
+from levels import Level
 
 from debug import debug
 
 class Game:
     def __init__(self):
 
-        #SETUP
+        #GAME SETUP
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
         pygame.display.set_caption('Zelda') #Set name caption on display screen
