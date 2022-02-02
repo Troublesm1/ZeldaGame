@@ -6,7 +6,7 @@ class Game:
 
         #SETUP
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
         self.clock = pygame.time.Clock()
 
     def run (self):
@@ -20,6 +20,6 @@ class Game:
             pygame.display.update()
             self.clock.tick(FPS)
 
-if __name__ = '__main__':
-    game = Game()
-    game.run()
+if __name__ == '__main__':
+	game = Game()
+	game.run()
