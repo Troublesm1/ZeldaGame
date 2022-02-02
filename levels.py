@@ -13,9 +13,9 @@ class Level:
         self.create_map()
 
     def create_map(self):
-        for row in WORLD_MAP:
+        for row_index,row in enumerate(WORLD_MAP):
+            print(row_index)
             print(row)
-
 
     def run(self):
         #UPDATE AND DRAW GAME
