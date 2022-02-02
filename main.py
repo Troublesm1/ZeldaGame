@@ -1,5 +1,6 @@
-import  pygame, sys
+import pygame, sys
 from settings import *
+from debug import debug
 
 class Game:
     def __init__(self):
@@ -7,6 +8,7 @@ class Game:
         #SETUP
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
+        pygame.display.set_caption('Zelda') #Set name caption on display screen
         self.clock = pygame.time.Clock()
 
     def run (self):
