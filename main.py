@@ -1,15 +1,25 @@
-# This is a sample Python script.
+import  pygame, sys
+from settings import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+class Game:
+    def __init__(self):
 
+        #SETUP
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
+        self.clock = pygame.time.Clock()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    def run (self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
+            self.screen.fill('black')
+            pygame.display.update()
+            self.clock.tick(FPS)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
+if __name__ = '__main__':
+    game = Game()
+    game.run()
