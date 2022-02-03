@@ -35,9 +35,11 @@ class YSortCameraGroup(pygame.sprite.Group):
         #SET-UP
         super().__init__()
         self.display_surface = pygame.display.get_surface()
+        self.offset = pygame.math.Vector2()
 
     def custom_draw(self):
         for sprite in self.sprites():
-            self.display_surface.blit(sprite.image,sprite.rect)
+            offset_pos = sprite.rect.topleft + self.offset
+            self.display_surface.blit(sprite.image,offset_pos)
 
 
