@@ -10,7 +10,7 @@ class Level:
     #GET THE DISPLAY SURFACE
         self.display_surface = pygame.display.get_surface()
     #SPRITE GROUP SET-UP
-        self.visible_sprites = pygame.sprite.Group()
+        self.visible_sprites = YSortCameraGroup()
         self.obstacles_sprites = pygame.sprite.Group()
     #SPRITE SETUP
         self.create_map()
@@ -27,6 +27,17 @@ class Level:
 
     def run(self):
         #UPDATE AND DRAW GAME
-        self.visible_sprites.draw(self.display_surface)
+        self.visible_sprites.custom_draw()
         self.visible_sprites.update()
-        debug(self.player.direction)
+
+class YSortCameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        #SET-UP
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()
+
+    def custom_draw(self):
+        for sprite in self.sprites():
+            self.display_surface.blit(sprite.image,sprite.rect)
+
+
