@@ -27,6 +27,4 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
 
     def update(self):
-        #UPDATE AND DRAW GAME
-        self.visible_sprites.draw(self.display_surface)
-        self.visible_sprites.update()
+        self.input()
