@@ -30,16 +30,19 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
         elif keys[pygame.K_LEFT]:
-                self.direction.x = -1
+            self.direction.x = -1
         else:
             self.direction.x = 0
 
         #ATTACK INPUT
         if keys[pygame.K_SPACE] and not self.attacking:
+            self.attacking = True
+            self.attack_time = pygame.time.get_ticks()
             print('attack')
 
         #MAGIC INPUT
         if keys[pygame.K_LCTRL] and not self.attacking:
+            self.attacking = True
             print('magic')
 
     def move(self,speed):
@@ -68,6 +71,14 @@ class Player(pygame.sprite.Sprite):
                     if self.direction.y < 0: #MOVING UP
                         self.hitbox.top = sprite.hitbox.bottom
 
+    def cooldowns(self):
+        current_time = pygame.time.get_ticks()
+
+        if self.attacking:
+            if current_time - self.attack_time >= self.attack_cooldown:
+                self.attacking = False
+
     def update(self):
         self.input()
+        self.cooldowns()
         self.move(self.speed)
