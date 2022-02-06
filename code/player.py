@@ -1,14 +1,18 @@
 import pygame
 from settings import *
 
+
 class Player(pygame.sprite.Sprite):
-    def __init__(self,pos,groups,obstacle_sprites):
+    def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
         self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
-        self.rect = self.image.get_rect(topleft = pos)
-        self.hitbox = self.rect.inflate(0,-26)
+        self.rect = self.image.get_rect(topleft=pos)
+        self.hitbox = self.rect.inflate(0, -26)
 
-        #MOVEMENT
+        # GRAPHICS SETUP
+        self.import_player_assets()
+
+        # MOVEMENT
         self.direction = pygame.math.Vector2()
         self.speed = 5
         self.attacking = False
@@ -17,13 +21,21 @@ class Player(pygame.sprite.Sprite):
 
         self.obstacle_sprites = obstacle_sprites
 
+    def import_player_assets(self):
+        character_path = '../graphics/player/'
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [], 'right_idle': [], 'left_idle': [],
+                           'up_idle': [], 'down_idle': [],
+                           'right_attack': [], 'left_attack': [], 'up_attack': [], 'down_attack': []}
+        for animation in self.animations.keys():
+            print(animation)
+
     def input(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
             self.direction.y = -1
         elif keys[pygame.K_DOWN]:
-                self.direction.y = 1
+            self.direction.y = 1
         else:
             self.direction.y = 0
 
@@ -34,19 +46,19 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
-        #ATTACK INPUT
+        # ATTACK INPUT
         if keys[pygame.K_SPACE] and not self.attacking:
             self.attacking = True
             self.attack_time = pygame.time.get_ticks()
             print('attack')
 
-        #MAGIC INPUT
+        # MAGIC INPUT
         if keys[pygame.K_LCTRL] and not self.attacking:
             self.attacking = True
             self.attack_time = pygame.time.get_ticks()
             print('magic')
 
-    def move(self,speed):
+    def move(self, speed):
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
 
@@ -56,20 +68,20 @@ class Player(pygame.sprite.Sprite):
         self.collision('vertical')
         self.rect.center = self.hitbox.center
 
-    def collision(self,direction):
+    def collision(self, direction):
         if direction == 'horizontal':
             for sprite in self.obstacle_sprites:
                 if sprite.hitbox.colliderect(self.hitbox):
-                    if self.direction.x > 0: #MOVING RIGHT
+                    if self.direction.x > 0:  # MOVING RIGHT
                         self.hitbox.right = sprite.hitbox.left
-                    if self.direction.x < 0: #MOVING LEFT
+                    if self.direction.x < 0:  # MOVING LEFT
                         self.hitbox.left = sprite.hitbox.right
         if direction == 'vertical':
             for sprite in self.obstacle_sprites:
                 if sprite.hitbox.colliderect(self.hitbox):
-                    if self.direction.y > 0: #MOVING DOWN
+                    if self.direction.y > 0:  # MOVING DOWN
                         self.hitbox.bottom = sprite.hitbox.top
-                    if self.direction.y < 0: #MOVING UP
+                    if self.direction.y < 0:  # MOVING UP
                         self.hitbox.top = sprite.hitbox.bottom
 
     def cooldowns(self):
