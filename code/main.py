@@ -4,18 +4,19 @@ from levels import Level
 
 from debug import debug
 
+
 class Game:
     def __init__(self):
 
-        #GAME SETUP
+        # GAME SETUP
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
-        pygame.display.set_caption('Zelda') #Set name caption on display screen
+        pygame.display.set_caption('Zelda')  # Set name caption on display screen
         self.clock = pygame.time.Clock()
 
         self.level = Level()
 
-    def run (self):
+    def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -27,6 +28,7 @@ class Game:
             pygame.display.update()
             self.clock.tick(FPS)
 
+
 if __name__ == '__main__':
-	game = Game()
-	game.run()
+    game = Game()
+    game.run()
