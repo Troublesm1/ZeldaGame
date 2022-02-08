@@ -2,7 +2,7 @@ import pygame, sys
 from settings import *
 from levels import Level
 
-from debug import debug
+
 
 
 class Game:
