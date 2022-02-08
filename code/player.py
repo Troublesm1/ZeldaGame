@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
 
         # GRAPHICS SETUP
         self.import_player_assets()
+        self.status = 'down'
 
         # MOVEMENT
         self.direction = pygame.math.Vector2()
@@ -30,22 +31,25 @@ class Player(pygame.sprite.Sprite):
         for animation in self.animations.keys():
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path)
-        print(self.animations)
 
     def input(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
             self.direction.y = -1
+            self.status = 'up'
         elif keys[pygame.K_DOWN]:
             self.direction.y = 1
+            self.status = 'down'
         else:
             self.direction.y = 0
 
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
+            self.status = 'right'
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
+            self.status = 'left'
         else:
             self.direction.x = 0
 
@@ -60,6 +64,25 @@ class Player(pygame.sprite.Sprite):
             self.attacking = True
             self.attack_time = pygame.time.get_ticks()
             print('magic')
+
+    def get_status(self):
+        #IDLE STATUS
+        if self.direction.x == 0 and self.direction.y == 0:
+            if not 'idle' in self.status and not 'attack' in self.status:
+                self.status = self.status + '_idle'
+
+        if self.attacking:
+            self.direction.x = 0
+            self.direction.y = 0
+            if not 'attack' in self.status:
+                if 'idle' in self.status:
+                    self.status = self.status.replace('_idle','_attack')
+                else:
+                    self.status = self.status + '_attack'
+        else:
+            if 'attack' in self.status:
+                self.status = self.status.replace('attack','')
+
 
     def move(self, speed):
         if self.direction.magnitude() != 0:
@@ -97,4 +120,5 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.input()
         self.cooldowns()
+        self.get_status()
         self.move(self.speed)
