@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
-        self.create_attack = create_attack
+        self.create_attack =create_attack
 
         self.obstacle_sprites = obstacle_sprites
 
@@ -63,8 +63,7 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_SPACE]:
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
-                self.create_attack
-                #self.create_attack()
+                self.create_attack()
 
             # magic input
             if keys[pygame.K_LCTRL]:

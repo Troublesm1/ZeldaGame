@@ -11,7 +11,7 @@ class Game:
         # GAME SETUP
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
-        pygame.display.set_caption('Zelda')  # Set name caption on display screen
+        pygame.display.set_caption('My version of Zelda')  # Set name caption on display screen
         self.clock = pygame.time.Clock()
 
         self.level = Level()
