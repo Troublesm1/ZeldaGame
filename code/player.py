@@ -10,21 +10,27 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(0, -26)
 
-        # graphics setup
+        # GRAPHICS SETUP
         self.import_player_assets()
         self.status = 'down'
         self.frame_index = 0
         self.animation_speed = 0.15
 
-        # movement
+        # MOVEMENTS
         self.direction = pygame.math.Vector2()
         self.speed = 5
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
-        self.create_attack =create_attack
-
         self.obstacle_sprites = obstacle_sprites
+
+        # WEAPON
+        self.create_attack = create_attack
+        self.weapon_index = 0
+        self.weapon = list(weapon_data.keys())[self.weapon_index]
+        print(self.weapon)
+
+
 
     def import_player_assets(self):
         character_path = '../graphics/player/'
