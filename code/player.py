@@ -4,7 +4,7 @@ from support import import_folder
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack):
+    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_magic):
         super().__init__(groups)
         self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
@@ -32,14 +32,20 @@ class Player(pygame.sprite.Sprite):
         self.weapon_switch_time = None
         self.switch_duration_cooldown = 200
 
+        # MAGIC
+        self.create_magic = create_magic
+        self.magic_index = 0
+        self.magic = list(magic_data.keys())[self.magic_index]
+        self.can_switch_magic = True
+        self.magic_switch_time = None
+        self.switch_duration_cooldown = 200
+
         # STATS
-        self.stats = {'health': 100,'energy': 60,'attack': 10,'magic': 4,'speed': 5}
+        self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'magic': 4, 'speed': 5}
         self.health = self.stats['health'] * 0.5
         self.energy = self.stats['energy'] * 0.8
         self.exp = 123
         self.speed = self.stats['speed']
-
-
 
     def import_player_assets(self):
         character_path = '../graphics/player/'
@@ -84,20 +90,22 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_LCTRL]:
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
-                print('magic')
+                style = list(magic_data.keys())[self.magic_index]
+                strength = list(magic_data.values())[self.magic_index]['strength'] + self.stats['magic']
+                cost = list(magic_data.values())[self.magic_index]['cost']
+                self.create_magic(style, strength, cost)
 
             # SELECT WEAPONS
             if keys[pygame.K_LALT] and self.can_switch_weapon:
                 self.can_switch_weapon = False
                 self.weapon_switch_time = pygame.time.get_ticks()
 
-                if self.weapon_index < len(list(weapon_data.keys())) -1:
+                if self.weapon_index < len(list(weapon_data.keys())) - 1:
                     self.weapon_index += 1
                 else:
                     self.weapon_index = 0
 
                 self.weapon = list(weapon_data.keys())[self.weapon_index]
-
 
     def get_status(self):
 
