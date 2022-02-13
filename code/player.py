@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
                 self.create_attack()
 
             # MAGIC INPUT
-            if keys[pygame.K_LCTRL]:
+            if keys[pygame.K_LALT]:
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 style = list(magic_data.keys())[self.magic_index]
@@ -96,7 +96,7 @@ class Player(pygame.sprite.Sprite):
                 self.create_magic(style, strength, cost)
 
             # SELECT WEAPONS
-            if keys[pygame.K_LALT] and self.can_switch_weapon:
+            if keys[pygame.K_LCTRL] and self.can_switch_weapon:
                 self.can_switch_weapon = False
                 self.weapon_switch_time = pygame.time.get_ticks()
 
@@ -108,7 +108,7 @@ class Player(pygame.sprite.Sprite):
                 self.weapon = list(weapon_data.keys())[self.weapon_index]
 
             # SELECT MAGIC
-            if keys[pygame.K_x] and self.can_switch_magic:
+            if keys[pygame.K_LSHIFT] and self.can_switch_magic:
                 self.can_switch_magic = False
                 self.magic_switch_time = pygame.time.get_ticks()
 
@@ -118,6 +118,7 @@ class Player(pygame.sprite.Sprite):
                     self.magic_index = 0
 
                 self.magic = list(magic_data.keys())[self.magic_index]
+                print('magic')
 
     def get_status(self):
 
