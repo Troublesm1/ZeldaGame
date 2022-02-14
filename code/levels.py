@@ -8,6 +8,7 @@ from debug import debug
 from support import *
 from random import choice
 from ui import UI
+from enemy import Enemy
 
 
 class Level:
@@ -65,6 +66,9 @@ class Level:
                                     self.create_attack,
                                     self.destroy_attack,
                                     self.create_magic)
+                            else:
+                                Enemy('monster', (x, y), [self.visible_sprites])
+
 
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
