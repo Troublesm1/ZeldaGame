@@ -67,7 +67,7 @@ class Level:
                                     self.destroy_attack,
                                     self.create_magic)
                             else:
-                                Enemy('monster', (x, y), [self.visible_sprites])
+                                Enemy('raccoon', (x, y), [self.visible_sprites])
 
 
     def create_attack(self):
