@@ -3,6 +3,7 @@ from settings import *
 from entity import Entity
 from support import *
 
+
 class Enemy(Entity):
     def __init__(self, monster_name, pos, groups, obstacle_sprites):
 
@@ -31,7 +32,6 @@ class Enemy(Entity):
         self.attack_radius = monster_info['attack_radius']
         self.notice_radius = monster_info['notice_radius']
         self.attack_type = monster_info['attack_type']
-
 
     def import_graphics(self, name):
         self.animations = {'idle': [], 'move': [], 'attack': []}
@@ -69,8 +69,18 @@ class Enemy(Entity):
         else:
             self.direction = pygame.math.Vector2()
 
+    def animate(self):
+        animation = self.animations[self.status]
+
+        self.frame_index += self.animation_speed
+        if self.frame_index >= len(animation):
+            self.frame_index = 0
+        self.image = animation[int(self.frame_index)]
+        self.rect = self.image.get_rect(center=self.hitbox.center)
+
     def update(self):
         self.move(self.speed)
+        self.animate()
 
     def enemy_update(self, player):
         self.get_status(player)
