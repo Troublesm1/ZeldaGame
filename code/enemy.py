@@ -5,23 +5,23 @@ from support import *
 
 
 class Enemy(Entity):
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles):
 
-        # GENERAL SET-UP
+        # general setup
         super().__init__(groups)
         self.sprite_type = 'enemy'
 
-        # GRAPHICS SETUP
+        # graphics setup
         self.import_graphics(monster_name)
         self.status = 'idle'
         self.image = self.animations[self.status][self.frame_index]
 
-        # MOVEMENT
+        # movement
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(0, -10)
         self.obstacle_sprites = obstacle_sprites
 
-        # STATS
+        # stats
         self.monster_name = monster_name
         monster_info = monster_data[self.monster_name]
         self.health = monster_info['health']
@@ -33,14 +33,15 @@ class Enemy(Entity):
         self.notice_radius = monster_info['notice_radius']
         self.attack_type = monster_info['attack_type']
 
-        # PLAYER INTERACTION
+        # player interaction
         self.can_attack = True
         self.attack_time = None
         self.attack_cooldown = 400
         self.damage_player = damage_player
+        self.trigger_death_particles = trigger_death_particles
 
-        # INVINCIBILITY TIMER
-        self.vulnerable =True
+        # invincibility timer
+        self.vulnerable = True
         self.hit_time = None
         self.invincibility_duration = 300
 
@@ -59,6 +60,7 @@ class Enemy(Entity):
             direction = (player_vec - enemy_vec).normalize()
         else:
             direction = pygame.math.Vector2()
+
         return (distance, direction)
 
     def get_status(self, player):
@@ -90,6 +92,7 @@ class Enemy(Entity):
             if self.status == 'attack':
                 self.can_attack = False
             self.frame_index = 0
+
         self.image = animation[int(self.frame_index)]
         self.rect = self.image.get_rect(center=self.hitbox.center)
 
@@ -102,9 +105,9 @@ class Enemy(Entity):
     def cooldowns(self):
         current_time = pygame.time.get_ticks()
         if not self.can_attack:
-            current_time = pygame.time.get_ticks()
             if current_time - self.attack_time >= self.attack_cooldown:
                 self.can_attack = True
+
         if not self.vulnerable:
             if current_time - self.hit_time >= self.invincibility_duration:
                 self.vulnerable = True
@@ -116,13 +119,14 @@ class Enemy(Entity):
                 self.health -= player.get_full_weapon_damage()
             else:
                 pass
-                # MAGIC DAMAGE
+            # magic damage
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
 
     def check_death(self):
         if self.health <= 0:
             self.kill()
+            self.trigger_death_particles(self.rect.center, self.monster_name)
 
     def hit_reaction(self):
         if not self.vulnerable:
