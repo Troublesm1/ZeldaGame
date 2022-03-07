@@ -10,6 +10,7 @@ from random import choice, randint
 from ui import UI
 from enemy import Enemy
 from particles import AnimationPlayer
+from magic import MagicPlayer
 
 
 class Level:
@@ -33,6 +34,7 @@ class Level:
 
         # PARTICLES
         self.animation_player = AnimationPlayer()
+        self.magic_player = MagicPlayer(self.animation_player)
 
     def create_map(self):
         layouts = {
@@ -96,6 +98,11 @@ class Level:
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
 
     def create_magic(self, style, strength, cost):
+        if style == 'heal':
+            pass
+        if style == 'flame':
+            pass
+
         print(style)
         print(strength)
         print(cost)
