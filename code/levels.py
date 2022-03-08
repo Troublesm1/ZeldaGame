@@ -102,7 +102,7 @@ class Level:
             self.magic_player.heal(self.player, strength, cost, [self.visible_sprites])
 
         if style == 'flame':
-            self.magic_player.flame(self.player, cost, [self.visible_sprites])
+            self.magic_player.flame(self.player, cost, [self.visible_sprites, self.attack_sprites])
 
 
     def destroy_attack(self):
@@ -120,7 +120,7 @@ class Level:
                             pos = target_sprite.rect.center
                             offset = pygame.math.Vector2(0, 75)
                             for leaf in range(randint(3, 6)):
-                                self.animation_player.create_grass_particles(pos - offset, [self.visible_sprites])
+                                self.animation_player.create_grass_particles(pos - offset, [self.visible_sprites,])
                             target_sprite.kill()
                         else:
                             target_sprite.get_damage(self.player, attack_sprite.sprite_type,)
