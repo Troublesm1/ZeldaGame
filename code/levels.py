@@ -17,6 +17,7 @@ class Level:
     def __init__(self):
         # GET THE DISPLAY SURFACE
         self.display_surface = pygame.display.get_surface()
+        self.game_paused = False
         # SPRITE GROUP SET-UP
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
@@ -94,7 +95,7 @@ class Level:
                                     self.damage_player,
                                     self.trigger_death_particles,
                                     self.add_exp
-                                    )
+                                )
 
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
@@ -139,14 +140,19 @@ class Level:
     def add_exp(self, amount):
         self.player.exp += amount
 
+    def toggle_menu(self):
+        self.game_paused = not self.game_paused
+
     def run(self):
-        # UPDATE AND DRAW GAME
         self.visible_sprites.custom_draw(self.player)
-        self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player)
-        self.player_attack_logic()
         self.ui.display(self.player)
 
+        if game_paused:
+            pass
+        else:
+            self.visible_sprites.update()
+            self.visible_sprites.enemy_update(self.player)
+            self.player_attack_logic()
 
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
