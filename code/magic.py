@@ -32,7 +32,7 @@ class MagicPlayer:
                 if direction.x:
                     offset_x = (direction.x * i) * TILESIZE
                     x = player.rect.centerx + offset_x + randint(-TILESIZE // 3, TILESIZE // 3)
-                    y = player.rect.centery +randint(-TILESIZE // 3, TILESIZE // 3)
+                    y = player.rect.centery + randint(-TILESIZE // 3, TILESIZE // 3)
                     self.animation_player.create_particles('flame', (x,y), groups)
                 else:
                     offset_y = (direction.y * i) * TILESIZE
