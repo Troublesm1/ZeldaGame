@@ -84,9 +84,12 @@ class Item:
         title_rect = title_surf.get_rect(midtop=self.rect.midtop + pygame.math.Vector2(0, 20))
 
         #COST
+        cost_surf = self.font.render(f'{int(cost)}', False, TEXT_COLOR)
+        cost_rect = cost_surf.get_rect(midbottom=self.rect.midbottom - pygame.math.Vector2(0, 20))
 
         #DRAW
         surface.blit(title_surf, title_rect)
+        surface.blit(cost_surf, cost_rect)
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         pygame.draw.rect(surface, UI_BG_COLOR, self.rect)
