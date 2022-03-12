@@ -79,12 +79,13 @@ class Item:
         self.font = font
 
     def display_names(self, surface, name, cost, selected):
+        color = TEXT_COLOR_SELECTED if selected else TEXT_COLOR
         #TITLE
-        title_surf = self.font.render(name, False, TEXT_COLOR)
+        title_surf = self.font.render(name, False, color)
         title_rect = title_surf.get_rect(midtop=self.rect.midtop + pygame.math.Vector2(0, 20))
 
         #COST
-        cost_surf = self.font.render(f'{int(cost)}', False, TEXT_COLOR)
+        cost_surf = self.font.render(f'{int(cost)}', False, color)
         cost_rect = cost_surf.get_rect(midbottom=self.rect.midbottom - pygame.math.Vector2(0, 20))
 
         #DRAW
@@ -92,5 +93,7 @@ class Item:
         surface.blit(cost_surf, cost_rect)
 
     def display(self, surface, selection_num, name, value, max_value, cost):
+        if self.index == selection_num:
+            pass
         pygame.draw.rect(surface, UI_BG_COLOR, self.rect)
-        self.display_names(surface,name,cost,False)
+        self.display_names(surface, name, cost, self.index == selection_num)
