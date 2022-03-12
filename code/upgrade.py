@@ -80,17 +80,29 @@ class Item:
 
     def display_names(self, surface, name, cost, selected):
         color = TEXT_COLOR_SELECTED if selected else TEXT_COLOR
-        #TITLE
+        # TITLE
         title_surf = self.font.render(name, False, color)
         title_rect = title_surf.get_rect(midtop=self.rect.midtop + pygame.math.Vector2(0, 20))
 
-        #COST
+        # COST
         cost_surf = self.font.render(f'{int(cost)}', False, color)
         cost_rect = cost_surf.get_rect(midbottom=self.rect.midbottom - pygame.math.Vector2(0, 20))
 
-        #DRAW
+        # DRAW
         surface.blit(title_surf, title_rect)
         surface.blit(cost_surf, cost_rect)
+
+    def display_bar(self, surface, value, max_value, selected):
+
+        # DRAWING SETUP
+        top = self.rect.midtop + pygame.math.Vector2(0, 60)
+        bottom = self.rect.midbottom - pygame.math.Vector2(0, 60)
+        color = BAR_COLOR_SELECTED if selected else BAR_COLOR
+
+        #DRAW ELEMENTS
+        pygame.draw.line(surface, color, top, bottom)
+
+
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         if self.index == selection_num:
@@ -101,3 +113,4 @@ class Item:
             pygame.draw.rect(surface, UI_BORDER_COLOR, self.rect, 4)
 
         self.display_names(surface, name, cost, self.index == selection_num)
+        self.display_bar(surface, value, max_value, self.index == selection_num)
