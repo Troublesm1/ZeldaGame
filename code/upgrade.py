@@ -38,7 +38,7 @@ class Upgrade:
             if keys[pygame.K_SPACE]:
                 self.can_move = False
                 self.selection_time = pygame.time.get_ticks()
-                print(self.selection_index)
+                self.item_list[self.selection_index].trigger(self.player)
 
     def selection_cooldown(self):
         if not self.can_move:
@@ -48,6 +48,7 @@ class Upgrade:
 
     def create_items(self):
         self.item_list = []
+
         for item, index in enumerate(range(self.attribute_nr)):
             # HORIZONTAL POSITION
             full_width = self.display_surface.get_size()[0]
@@ -107,6 +108,10 @@ class Item:
         #DRAW ELEMENTS
         pygame.draw.line(surface, color, top, bottom, 5)
         pygame.draw.rect(surface, color, value_rect)
+
+    def trigger(self, player):
+        upgrade_attribute = list(player.stats.keys())[self.index]
+        print(upgrade_attribute)
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         if self.index == selection_num:
