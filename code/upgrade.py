@@ -94,6 +94,10 @@ class Item:
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         if self.index == selection_num:
-            pass
-        pygame.draw.rect(surface, UI_BG_COLOR, self.rect)
+            pygame.draw.rect(surface, UPGRADE_BG_COLOR_SELECTED, self.rect)
+            pygame.draw.rect(surface, UI_BORDER_COLOR, self.rect, 4)
+        else:
+            pygame.draw.rect(surface, UI_BG_COLOR, self.rect)
+            pygame.draw.rect(surface, UI_BORDER_COLOR, self.rect, 4)
+
         self.display_names(surface, name, cost, self.index == selection_num)
