@@ -99,10 +99,14 @@ class Item:
         bottom = self.rect.midbottom - pygame.math.Vector2(0, 60)
         color = BAR_COLOR_SELECTED if selected else BAR_COLOR
 
+        # BAR SETUP
+        full_height = bottom[1] - top[1]
+        relative_number = (value / max_value) * full_height
+        value_rect = pygame.Rect(top[0] - 15, bottom[1] - relative_number, 30, 10)
+
         #DRAW ELEMENTS
-        pygame.draw.line(surface, color, top, bottom)
-
-
+        pygame.draw.line(surface, color, top, bottom, 5)
+        pygame.draw.rect(surface, color, value_rect)
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         if self.index == selection_num:
