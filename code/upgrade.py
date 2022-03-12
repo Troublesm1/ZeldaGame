@@ -111,7 +111,11 @@ class Item:
 
     def trigger(self, player):
         upgrade_attribute = list(player.stats.keys())[self.index]
-        print(upgrade_attribute)
+
+        if player.exp >= player.upgrade_cost[upgrade_attribute]:
+            player.exp -= player.upgrade_cost[upgrade_attribute]
+            player.stats[upgrade_attribute] *= 1.2
+            player.upgrade_cost[upgrade_attribute] *= 1.4
 
     def display(self, surface, selection_num, name, value, max_value, cost):
         if self.index == selection_num:
